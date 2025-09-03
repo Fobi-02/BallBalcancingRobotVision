@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\BBR_project.dir/objects.a
+C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\BBR_project.dir/objects.a @CMakeFiles\BBR_project.dir\objects1.rsp
+C:\msys64\mingw64\bin\c++.exe -Wl,--whole-archive CMakeFiles\BBR_project.dir/objects.a -Wl,--no-whole-archive -o BBR_project.exe -Wl,--out-implib,libBBR_project.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\BBR_project.dir\linkLibs.rsp

@@ -1,0 +1,3 @@
+C:/Users/feder/Pictures/Ball balancing robot/BallBalcancingRobotVision/CMakeFiles/ProvaOpenCV.dir
+C:/Users/feder/Pictures/Ball balancing robot/BallBalcancingRobotVision/CMakeFiles/edit_cache.dir
+C:/Users/feder/Pictures/Ball balancing robot/BallBalcancingRobotVision/CMakeFiles/rebuild_cache.dir
