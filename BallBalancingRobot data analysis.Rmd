@@ -1,0 +1,179 @@
+---
+title: "BallBalancingRobot data analysis"
+output: pdf_document
+date: "2024-12-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(modelr)
+library(caret)
+library(plotly)
+```
+
+# Apertura del file csv
+
+```{r}
+data <- read_csv("BallBalcancingRobotVision/log.csv",show_col_types = FALSE)
+#cambio le posizioni x e y in modo che siano centrate rispetto al centro della webcam
+data <- data %>%
+  mutate(pos_x=pos_x-240) %>%
+  mutate(pos_y=pos_y-320)
+data
+```
+```{r}
+data2 <- read.table("C:/Users/feder/Pictures/Ball balancing robot/BallBalcancingRobotVision/log_actual.csv",skip=2,sep=",",col.names = c("time","motor1","motor2","motor3"))
+data2
+```
+
+```{r, fig.width=10, fig.height=5}
+#posizione x pallina in tutto l'intervallo di tempo
+data %>%
+  filter(time>0) %>%
+  ggplot(aes(x=time,y=pos_y)) +
+  geom_point(color="Red",size=1)
+```
+
+
+
+
+```{r, fig.width=10, fig.height=5}
+#posizione x pallina nell'intervallo interessante
+t1 <- 15000
+t2 <- 30000
+data %>%
+  filter(time>t1, time<t2) %>%
+  ggplot(aes(x=time)) +
+  geom_point(aes(y=pos_y),color='red',size=1) +
+  geom_line(aes(y=pos_y),color='red')
+```
+```{r, fig.width=10, fig.height=5}
+#angolo thx
+data %>%
+  filter(time>t1, time<t2) %>%
+  ggplot(aes(x=time)) +
+  geom_line(aes(y=thy),color='magenta') +
+  geom_line(aes(y=thy_original),color='purple')
+```
+```{r}
+data %>%
+  filter(time>t1, time<t2) %>%
+  ggplot(aes(x=time)) +
+  geom_point(aes(y=h),color='blue',size=1) +
+  geom_line(aes(y=h),color='blue')
+```
+
+
+```{r, fig.width=10, fig.height=5}
+# per muovere a sinistra il blu -offset
+t_offset = -1500;
+
+data1_filt = data %>%
+  filter(time>t1, time<t2)
+data2_filt = data2 %>%
+  filter(time>t1+t_offset, time<t2+t_offset)
+# confronto posizione dei 3 motori
+
+ggplot() +
+  geom_line(data=data1_filt, aes(x=time,y=target_motor2),color='red') +
+  geom_line(data=data2_filt, aes(x=time-t_offset,y=motor2),color='blue')
+```
+
+```{r, fig.width=10, fig.height=5}
+# confronto posizione dei 3 motori
+
+ggplot() +
+  geom_line(data=data, aes(x=time,y=target_motor1),color='red') +
+  geom_line(data=data2, aes(x=time-t_offset,y=motor1),color='blue')
+
+```
+
+```{r, fig.width=10, fig.height=5}
+# trovo gli intervalli di tempo tra due posizioni consecutive
+data %>%
+  mutate(
+    Dt=c(NA,diff(time)),
+    .after=time
+  ) %>%
+  ggplot(aes(x=time,y=Dt)) +
+  geom_point(color='gold',size=1) +
+  coord_cartesian(ylim = c(20, 80)) +
+  geom_line(color='gold') +
+  geom_hline(yintercept=33, color='blue') + #30FPS
+  geom_hline(yintercept=66, color='blue')   #15FPS
+```
+```{r, fig.width=10, fig.height=5}
+# velocità della pallina
+data %>%
+  filter(time>t1, time<t2) %>%
+  mutate(
+    Dt=c(0,diff(time)),
+    Dx=c(0,diff(pos_y)),
+    .after=time
+  ) %>%
+  ggplot(aes(x=time,Dx/Dt)) +
+  geom_line(color='blue')
+```
+```{r, fig.width=10, fig.height=5}
+# requested speed
+data %>%
+  filter(time>t1,time<t2) %>%
+  ggplot(aes(x=time)) +
+  geom_line(aes(y=speed1,color='red'))
+```
+
+
+```{r}
+limitPlanes <- read.csv("C:/Users/feder/log_BBR2.txt",header = T,sep=',');
+head(limitPlanes);
+```
+
+```{r}
+plot_ly(x=limitPlanes$thx, y=limitPlanes$thy, z=limitPlanes$h, type="scatter3d", mode="markers",color=limitPlanes$thx)
+```
+
+
+```{r}
+p <- plot_ly(x=data$thx,y=data$thy,z=data$h,type="scatter3d",color=data$time)
+p <- add_trace(p,x=limitPlanes$thx, y=limitPlanes$thy, z=limitPlanes$h, type="scatter3d", mode="markers",color='gray',opacity=0.1)
+p
+```
+
+```{r}
+filt <- limitPlanes %>% filter(h>120,h<121)
+q <- plot_ly(x=filt$thx,y=filt$thy,type="scatter")
+q <- add_trace(q,x=data$thx,y=data$thy,color=data$time)
+q
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

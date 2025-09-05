@@ -32,9 +32,7 @@ double integralX = 0;
 double integralY = 0;
 double prevX = 0;
 double prevY = 0;
-int PrevMotor1 = 331;
-int PrevMotor2 = 331;
-int PrevMotor3 = 331;
+int prevMotor[3] = {331,331,331};
 time_point<steady_clock> tStart = steady_clock::now();
 
 double samplerate=25;  // Fs in Hz
@@ -380,27 +378,36 @@ BOOL WINAPI ConsoleHandler(DWORD signal) {
     }
 }
 
-void limit(double &thx, double& thy, double& h)
-{
-    // limiting thx and thy to [-0.25,0.25]
-    if(thx>0.25)
-        thx = 0.25;
-    else if(thx < -0.25)
-        thx = -0.25;
-    if(thy>0.25)
-        thy = 0.25;
-    else if(thy < -0.25)
-        thy = -0.25;
+void limit(double &thx, double& thy, double& h) {
+    if(h>150)
+        h = 150;
+    // left and right limits
+    if(thx>0.5)
+        thx = 0.5;
+    else if(thx < -0.5)
+        thx = -0.5;
+    else if(thx < -1.5+0.01*h)
+        thx = -1.5+0.01*h;
 
-    // if the heigth of the platform is above the permitted one (defined by three planes) i translate it down under the planes
-    // i also move by an additional 1mm to be more conservative
-
-    if( h > -151.521*(-1-0.695756*thx))
-        h = -151.521*(-1-0.695756*thx) - 3;
-    if( h > -146.025*(-1+0.274268*thx-0.514345*thy))
-        h = -146.025*(-1+0.274268*thx-0.514345*thy) - 3;
-    if( h > -146.025*(-1+0.274268*thx+0.514345*thy))
-        h = -146.025*(-1+0.274268*thx+0.514345*thy) - 3;
+    if(thy > 0.5)
+        thy = 0.5;
+    if(thy < -0.5)
+        thy = -0.5;
+    
+    double m1 = -0.505;
+    double q1 = 1.5925-0.0106167*h;
+    double m2 = -m1;
+    double q2 = -q1;
+    // point is above limit
+    if(thy > m1*thx+q1) {
+        thx = (-m1*q1+thx+m1*thy)/(1+m1*m1);
+        thy = m1*thx+q1;
+    } 
+    // point is under the limit
+    if(thy < m2*thx+q2) {
+        thx = (-m2*q2+thx+m2*thy)/(1+m2*m2);
+        thy = m2*thx+q2;
+    }
 }
 
 void controlLoop(time_point<steady_clock> tStart, int goalX, int goalY, bool& ballFound, time_point<steady_clock>& previousTime, int* speed) {   
@@ -448,18 +455,17 @@ void controlLoop(time_point<steady_clock> tStart, int goalX, int goalY, bool& ba
 
         // speed of the motor proportional to the difference in position
         if(ballFound==1) {
-            speed[0]=min(500/17*abs(pos[0]-PrevMotor1),700);
-            speed[1]=min(500/17*abs(pos[1]-PrevMotor2),700);
-            speed[2]=min(500/17*abs(pos[2]-PrevMotor3),700);
+            speed[0]=min(500/17*abs(pos[0]-prevMotor[0]),700);
+            speed[1]=min(500/17*abs(pos[1]-prevMotor[1]),700);
+            speed[2]=min(500/17*abs(pos[2]-prevMotor[2]),700);
         } else {
             speed[0]=500;
             speed[1]=500;
             speed[2]=500;
         }
-
-        PrevMotor1 = pos[0];
-        PrevMotor2 = pos[1];
-        PrevMotor3 = pos[2];
+        prevMotor[0] = pos[0];
+        prevMotor[1] = pos[1];
+        prevMotor[2] = pos[2];
 
         //step 4: sending the data trough serial port
         string to_send = to_string(pos[0]) + '_' + to_string(pos[1]) + '_' + to_string(pos[2]) + '_' 
@@ -522,10 +528,7 @@ void circle(HANDLE hSerial, VideoCapture cap, ofstream& log_file, ofstream& log_
     int cy = int(cap.get(CAP_PROP_FRAME_WIDTH)/2);
     double r = 140;
     double theta = 0;
-    int speed[3];
-    speed[0]=500;
-    speed[1]=500;
-    speed[2]=500;
+    int speed[3] = {500,500,500};
 
     while(true) {
         theta += 2*2*PI/180;
@@ -540,7 +543,6 @@ void circle(HANDLE hSerial, VideoCapture cap, ofstream& log_file, ofstream& log_
 }
 
 void star(HANDLE hSerial, VideoCapture cap, ofstream& log_file, ofstream& log_real_pos) {
-    auto tStart = steady_clock::now();
     auto previousTime = tStart;
     //preparo il termine integrativo per il PID
     double integralX = 0; double integralY = 0;
@@ -576,7 +578,6 @@ void star(HANDLE hSerial, VideoCapture cap, ofstream& log_file, ofstream& log_re
 }
 
 void square(HANDLE hSerial, VideoCapture cap, ofstream& log_file, ofstream& log_real_pos) {
-    auto tStart = steady_clock::now();
     auto previousTime = tStart;
     //preparo il termine integrativo per il PID
     double integralX = 0; double integralY = 0;
@@ -607,6 +608,7 @@ void square(HANDLE hSerial, VideoCapture cap, ofstream& log_file, ofstream& log_
         }
     }
 }
+
 /*
 void jump(HANDLE hSerial)
 {
@@ -625,7 +627,6 @@ void jump(HANDLE hSerial)
     sendData(to_send);
     cout << to_send << endl;
 }
-
 */
 
 /*
@@ -649,7 +650,6 @@ int main()
              "per fare una figura c,s,q (cerchio, stella, quadrato)." << endl;
         char comando;
         cin >> comando;
-
         if(comando == 'b') {
             balance(hSerial,cap,log_file,log_real_pos);
         } else if(comando == 'c') {
@@ -668,8 +668,6 @@ int main()
     log_file.close();
     return 0;
 }
-
-
 
 
 // to compile:
