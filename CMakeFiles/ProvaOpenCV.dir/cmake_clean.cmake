@@ -1,12 +1,12 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ProvaOpenCV.dir/BallBalancingRobot.cpp.obj"
   "CMakeFiles/ProvaOpenCV.dir/BallBalancingRobot.cpp.obj.d"
-  "CMakeFiles/ProvaOpenCV.dir/rtfir.cpp.obj"
-  "CMakeFiles/ProvaOpenCV.dir/rtfir.cpp.obj.d"
-  "ProvaOpenCV.exe"
-  "ProvaOpenCV.exe.manifest"
-  "ProvaOpenCV.pdb"
-  "libProvaOpenCV.dll.a"
+  "CMakeFiles/ProvaOpenCV.dir/packages/rtfir.cpp.obj"
+  "CMakeFiles/ProvaOpenCV.dir/packages/rtfir.cpp.obj.d"
+  "executable/RunRobot.exe"
+  "executable/RunRobot.exe.manifest"
+  "executable/RunRobot.pdb"
+  "libRunRobot.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -1,5 +1,5 @@
 CMakeFiles/ProvaOpenCV.dir/BallBalancingRobot.cpp.obj: \
- C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalcancingRobotVision\BallBalancingRobot.cpp \
+ C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalancingRobotVision\BallBalancingRobot.cpp \
  C:/opencv/build/install/include/opencv2/opencv.hpp \
  C:/opencv/build/install/include/opencv2/opencv_modules.hpp \
  C:/opencv/build/install/include/opencv2/core.hpp \
@@ -546,10 +546,28 @@ CMakeFiles/ProvaOpenCV.dir/BallBalancingRobot.cpp.obj: \
  C:/msys64/mingw64/x86_64-w64-mingw32/include/winsvc.h \
  C:/msys64/mingw64/x86_64-w64-mingw32/include/mcx.h \
  C:/msys64/mingw64/x86_64-w64-mingw32/include/imm.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/dshow.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/windowsx.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/olectl.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/ocidl.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/ddraw.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/_mingw_dxhelper.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/strsafe.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/strmif.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/ocidl.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/amvideo.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/control.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/evcode.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/uuids.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/ksuuids.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/errors.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/vfwmsgs.h \
+ C:/msys64/mingw64/x86_64-w64-mingw32/include/audevcod.h \
  C:/msys64/mingw64/include/c++/10.3.0/fstream \
  C:/msys64/mingw64/include/c++/10.3.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/10.3.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/10.3.0/bits/fstream.tcc \
  C:/msys64/mingw64/x86_64-w64-mingw32/include/conio.h \
  C:/msys64/mingw64/x86_64-w64-mingw32/include/sec_api/conio_s.h \
- C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalcancingRobotVision\rtfir.hpp
+ C:/msys64/mingw64/include/c++/10.3.0/atomic \
+ C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalancingRobotVision\packages/rtfir.hpp

@@ -14,7 +14,11 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Aggiungi il file sorgente
 #add_executable(ProvaOpenCV BallBalancingRobot.cpp)
-add_executable(ProvaOpenCV BallBalancingRobot.cpp rtfir.cpp)
+add_executable(ProvaOpenCV BallBalancingRobot.cpp packages/rtfir.cpp)
+set_target_properties(ProvaOpenCV PROPERTIES
+    OUTPUT_NAME "RunRobot"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/executable"
+)
 
 # Collega le librerie di OpenCV al tuo eseguibile
-target_link_libraries(ProvaOpenCV ${OpenCV_LIBS})
+target_link_libraries(ProvaOpenCV ${OpenCV_LIBS} ole32 oleaut32 uuid)

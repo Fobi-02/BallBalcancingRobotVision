@@ -1,5 +1,5 @@
 CMakeFiles/ProvaOpenCV.dir/rtfir.cpp.obj: \
- C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalcancingRobotVision\rtfir.cpp \
+ C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalancingRobotVision\rtfir.cpp \
  C:/msys64/mingw64/include/c++/10.3.0/stdexcept \
  C:/msys64/mingw64/include/c++/10.3.0/exception \
  C:/msys64/mingw64/include/c++/10.3.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -118,7 +118,7 @@ CMakeFiles/ProvaOpenCV.dir/rtfir.cpp.obj: \
  C:/msys64/mingw64/include/c++/10.3.0/math.h \
  C:/msys64/mingw64/include/c++/10.3.0/cmath \
  C:/msys64/mingw64/x86_64-w64-mingw32/include/math.h \
- C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalcancingRobotVision\rtfir.hpp \
+ C:\Users\feder\Pictures\Ball\ balancing\ robot\BallBalancingRobotVision\rtfir.hpp \
  C:/msys64/mingw64/include/c++/10.3.0/vector \
  C:/msys64/mingw64/include/c++/10.3.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/10.3.0/bits/stl_vector.h \
